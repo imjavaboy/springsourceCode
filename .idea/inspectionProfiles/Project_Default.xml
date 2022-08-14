@@ -30,7 +30,7 @@
       <option name="IGNORE_JAVADOC_PERIOD" value="true" />
       <option name="IGNORE_DUPLICATED_THROWS" value="false" />
       <option name="IGNORE_POINT_TO_ITSELF" value="false" />
-      <option name="myAdditionalJavadocTags" value="date" />
+      <option name="myAdditionalJavadocTags" value="date,ConfigurationProperties注解对应的后处理器是ConfigurationPropertiesBindingPostProcessor。,Resource、@PostConstruct、@PreDestroy注解对应的后处理器是CommonAnnotationBeanPostProcessor；,Value注解需要配合@Autowired注解一起使用，所以也用到了AutowiredAnnotationBeanPostProcessor后处理器，然后@Value注解还需要再用到ContextAnnotationAutowireCandidateResolver解析器，否则会报错；,Autowired注解对应的后处理器是AutowiredAnnotationBeanPostProcessor；" />
     </inspection_tool>
   </profile>
 </component>
