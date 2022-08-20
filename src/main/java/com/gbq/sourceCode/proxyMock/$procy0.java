@@ -3,6 +3,7 @@ package com.gbq.sourceCode.proxyMock;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.UndeclaredThrowableException;
 
 /**
  * @author 郭本琪
@@ -12,30 +13,47 @@ import java.lang.reflect.Method;
  */
 
 public class  $procy0 implements A13.FOO1 {
+
+    static Method foo;
+    static Method bar;
+
+    static {
+        try {
+            foo = A13.FOO1.class.getDeclaredMethod("foo");
+            bar = A13.FOO1.class.getDeclaredMethod("bar");
+        } catch (NoSuchMethodException e) {
+            throw new NoSuchMethodError(e.getMessage());
+        }
+    }
     private A13.invokeHandler invokeHandler;
 
     public $procy0(A13.invokeHandler invokeHandler) {
         this.invokeHandler = invokeHandler;
     }
 
+
     @Override
     public void foo() {
         //抽离出去
         try {
-            Method foo = A13.FOO1.class.getMethod("foo");
-            invokeHandler.invoke(foo,new Object[0]);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
+            invokeHandler.invoke(this,foo,new Object[0]);
+        } catch (RuntimeException e){
+            throw e;
+        } catch (Throwable e) {
+            throw new UndeclaredThrowableException(e);
         }
     }
 
     @Override
-    public void bar() {
+    public int bar() {
         try {
-            Method foo = A13.FOO1.class.getMethod("bar");
-            invokeHandler.invoke(foo,new Object[0]);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
+
+           return (int)  invokeHandler.invoke(this,bar,new Object[0]);
+        }catch (RuntimeException e){
+            throw e;
+        } catch (Throwable e) {
+           throw new UndeclaredThrowableException(e);
         }
     }
+
 }

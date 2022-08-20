@@ -18,7 +18,7 @@ public class A13 {
      * */
     interface FOO1{
         void foo();
-        void bar();
+       int bar();
     }
     static class Target implements FOO1{
         @Override
@@ -27,21 +27,21 @@ public class A13 {
         }
 
         @Override
-        public void bar() {
+        public int bar() {
             System.out.println("bar方法");
+            return 1;
         }
     }
     interface invokeHandler{
-        void invoke(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException;
+        Object invoke(Object proxy,Method method, Object[] args) throws InvocationTargetException, IllegalAccessException;
     }
 
     public static void main(String[] args) {
         $procy0 proxy = new $procy0(new invokeHandler() {
             @Override
-            public void invoke(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
+            public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
                 System.out.println("before");
-              method.invoke(new Target(),args);
-                System.out.println("afetr");
+                return method.invoke(new Target(),args);
             }
         });
         proxy.foo();
