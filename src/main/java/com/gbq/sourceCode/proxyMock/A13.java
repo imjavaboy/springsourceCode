@@ -1,6 +1,10 @@
 package com.gbq.sourceCode.proxyMock;
 
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
+
 /**
  * @author 郭本琪
  * @description
@@ -9,30 +13,39 @@ package com.gbq.sourceCode.proxyMock;
  */
 
 public class A13 {
+    /**
+     * 有两个方法实现的动态代理，需要去判断那个方法的调用
+     * */
     interface FOO1{
         void foo();
+        void bar();
     }
     static class Target implements FOO1{
         @Override
         public void foo() {
-            System.out.println("你好");
+            System.out.println("foo方法");
+        }
+
+        @Override
+        public void bar() {
+            System.out.println("bar方法");
         }
     }
     interface invokeHandler{
-        void invoke();
+        void invoke(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException;
     }
 
     public static void main(String[] args) {
         $procy0 proxy = new $procy0(new invokeHandler() {
             @Override
-            public void invoke() {
+            public void invoke(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
                 System.out.println("before");
-                new Target().foo();
+              method.invoke(new Target(),args);
                 System.out.println("afetr");
-
             }
         });
         proxy.foo();
+        proxy.bar();
 
     }
 }
