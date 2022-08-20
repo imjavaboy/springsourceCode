@@ -73,8 +73,9 @@ public class TestBeanFactoryPostProcessors {
 //            }
 //        }
 
-        context.addBeanFactoryPostProcessor(new BqAtBeanPostProcessor());
+//        context.addBeanFactoryPostProcessor(new BqAtBeanPostProcessor());
 
+        context.addBeanFactoryPostProcessor(new BqMapperPostProcessor());
         //初始化容器
         context.refresh();
 
