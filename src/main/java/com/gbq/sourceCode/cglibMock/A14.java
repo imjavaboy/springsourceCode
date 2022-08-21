@@ -21,7 +21,11 @@ public class A14 {
             @Override
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
                 System.out.println("before");
-              return    method.invoke(target,objects);
+//              return    method.invoke(target,objects);//反射调用
+
+//                return methodProxy.invoke(target,objects);//内部无反射，结合目标类使用
+
+                return methodProxy.invokeSuper(o,objects);//内部无反射，结合代理使用
             }
         });
         proxy.save();
