@@ -5,7 +5,11 @@ spring:
     url: jdbc:mysql://localhost:3306/ktp?useUnicode=true&usesSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: 123456789g
+  mvc:
+    servlet:
+      load-on-startup: 1
 server:
   servlet:
     session:
       timeout: 10s
+  port: 9000
