@@ -7,7 +7,6 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.Order;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectInstanceFactory;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
@@ -75,7 +74,6 @@ public class A17 {
     }
 
     @Aspect
-    @Order(1)
     static class Aspect1{
         @Before("execution(* foo())")
         public void before(){

@@ -11,6 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.ArrayList;
+
 
 /**
  * @author 郭本琪
@@ -45,6 +50,22 @@ public class WebConfig {
         registrationBean.setLoadOnStartup(webMvcProperties.getServlet().getLoadOnStartup());
         return registrationBean;
     }
+    @Bean
+    public RequestMappingHandlerMapping requestMappingHandlerMapping(){
+        return new RequestMappingHandlerMapping();
+    }
+
+    @Bean
+    public MyRequstMappingHandlerAdapter requestMappingHandlerAdapter(){
+        //加入token解析器
+        TokenArgumentResolver tokenArgumentResolver = new TokenArgumentResolver();
+        MyRequstMappingHandlerAdapter handlerAdapter = new MyRequstMappingHandlerAdapter();
+        ArrayList arrayList = new ArrayList();
+        arrayList.add(tokenArgumentResolver);
+        handlerAdapter.setCustomArgumentResolvers(arrayList);
+        return new MyRequstMappingHandlerAdapter();
+    }
+
 
 
 }
