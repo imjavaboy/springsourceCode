@@ -5,7 +5,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.ServletRequestParameterPropertyValues;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.method.support.InvocableHandlerMethod;
+import org.springframework.web.servlet.mvc.method.annotation.ServletRequestDataBinderFactory;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,18 +22,42 @@ import java.util.Date;
  */
 
 public class TestServletDataBinderFactory {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setParameter("birthday", "1999/01/02");
+        request.setParameter("birthday", "1999|01|02");
         request.setParameter("address.name", "西安");
 
         User user = new User();
-        ServletRequestDataBinder dataBinder = new ServletRequestDataBinder(user);
+
+//        //工厂方式，无扩展
+//        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(null, null);
+//        WebDataBinder dataBinder = factory.createBinder(new ServletWebRequest(request), user, "user");
+//        ServletRequestDataBinder dataBinder = new ServletRequestDataBinder(user);
+
+
+        //用INitBinder转换
+        InvocableHandlerMethod method = new InvocableHandlerMethod(new Controller(), Controller.class.getMethod("aaa", WebDataBinder.class));
+        ArrayList lists = new ArrayList();
+        lists.add(method);
+
+
+        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(lists, null);
+        WebDataBinder dataBinder = factory.createBinder(new ServletWebRequest(request), user, "user");
+
+
         dataBinder.bind(new ServletRequestParameterPropertyValues(request));
         System.out.println(user);
 
     }
 
+    static class Controller{
+        @InitBinder
+        public void aaa(WebDataBinder dataBinder){
+            //扩展dataBinder的转换器
+            dataBinder.addCustomFormatter(new MyDateFormatter("@InitBinder方式扩展"));
+
+        }
+    }
 
     static class User {
         private Date birthday;
