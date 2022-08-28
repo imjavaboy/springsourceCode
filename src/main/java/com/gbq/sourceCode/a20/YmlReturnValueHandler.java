@@ -6,7 +6,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import org.yaml.snakeyaml.Yaml;
+
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,10 +29,10 @@ public class YmlReturnValueHandler implements HandlerMethodReturnValueHandler {
     public void handleReturnValue(Object o, MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
                                   NativeWebRequest nativeWebRequest) throws Exception {
 
-        String str = new Yaml().dump(o);
+//        String str = new Yaml().dump(o);
         HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
         response.setContentType("text/plain;charset=utf-8");
-        response.getWriter().print(str);
+//        response.getWriter().print(str);
 
         //设置请求处理完毕
         modelAndViewContainer.setRequestHandled(true);

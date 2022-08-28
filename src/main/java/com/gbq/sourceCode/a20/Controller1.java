@@ -1,11 +1,8 @@
 package com.gbq.sourceCode.a20;
 
 
-import com.gbq.sourceCode.springDev.pojo.User;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * @author 郭本琪
