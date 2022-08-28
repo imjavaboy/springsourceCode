@@ -2,11 +2,13 @@ package com.gbq.sourceCode.a23Conversion;
 
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.ServletRequestParameterPropertyValues;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.InvocableHandlerMethod;
 import org.springframework.web.servlet.mvc.method.annotation.ServletRequestDataBinderFactory;
@@ -35,15 +37,22 @@ public class TestServletDataBinderFactory {
 //        ServletRequestDataBinder dataBinder = new ServletRequestDataBinder(user);
 
 
-        //用INitBinder转换
-        InvocableHandlerMethod method = new InvocableHandlerMethod(new Controller(), Controller.class.getMethod("aaa", WebDataBinder.class));
-        ArrayList lists = new ArrayList();
-        lists.add(method);
+//        //用INitBinder转换
+//        InvocableHandlerMethod method = new InvocableHandlerMethod(new Controller(), Controller.class.getMethod("aaa", WebDataBinder.class));
+//        ArrayList lists = new ArrayList();
+//        lists.add(method);
+//
+//
+//        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(lists, null);
+//        WebDataBinder dataBinder = factory.createBinder(new ServletWebRequest(request), user, "user");
 
-
-        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(lists, null);
+        ///用ConversionService转换
+        FormattingConversionService service = new FormattingConversionService();
+        service.addFormatter(new MyDateFormatter("用Service方法扩展"));
+        ConfigurableWebBindingInitializer initializer = new ConfigurableWebBindingInitializer();
+        initializer.setConversionService(service);
+        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(null, initializer);
         WebDataBinder dataBinder = factory.createBinder(new ServletWebRequest(request), user, "user");
-
 
         dataBinder.bind(new ServletRequestParameterPropertyValues(request));
         System.out.println(user);
@@ -60,6 +69,7 @@ public class TestServletDataBinderFactory {
     }
 
     static class User {
+        @DateTimeFormat(pattern = "yyyy|MM|dd")
         private Date birthday;
         private Address address;
 
