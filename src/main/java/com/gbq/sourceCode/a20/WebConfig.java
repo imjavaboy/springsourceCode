@@ -59,9 +59,11 @@ public class WebConfig {
     public MyRequstMappingHandlerAdapter requestMappingHandlerAdapter(){
         //加入token解析器
         TokenArgumentResolver tokenArgumentResolver = new TokenArgumentResolver();
+        YmlReturnValueHandler ymlReturnValueHandler = new YmlReturnValueHandler();
         MyRequstMappingHandlerAdapter handlerAdapter = new MyRequstMappingHandlerAdapter();
         ArrayList arrayList = new ArrayList();
         arrayList.add(tokenArgumentResolver);
+        arrayList.add(ymlReturnValueHandler);
         handlerAdapter.setCustomArgumentResolvers(arrayList);
         return new MyRequstMappingHandlerAdapter();
     }

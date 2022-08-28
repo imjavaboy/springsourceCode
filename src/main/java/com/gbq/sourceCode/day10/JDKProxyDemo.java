@@ -61,7 +61,8 @@ interface Foo {
     String foo(int x);
 }
 
-class Target implements Foo{
+class
+Target implements Foo{
     @Override
     public String foo(int x) {
 

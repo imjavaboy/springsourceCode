@@ -24,6 +24,7 @@ public class CglibProxyDemo {
      * cglib能够代理类和接口，但是被代理的类不难被final修饰，并且接口的方法不难被final修饰
      * jd东动态代理采用了反射技术进行操作，在生成类方面更搞笑
      * cglib动态代理采用了asm框架直接对字节码进行修改，使用了fastclass的特性，执行更搞笑
+     *
      * */
 
 
